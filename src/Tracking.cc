@@ -1018,12 +1018,12 @@ bool Tracking::NeedNewKeyFrame()
     bool bNeedToInsertClose = (nTrackedClose<100) && (nNonTrackedClose>70);
 
     // Thresholds
-    float thRefRatio = 0.75f;
+    float thRefRatio = 0.7f; // 0.75
     if(nKFs<2)
         thRefRatio = 0.4f;
 
     if(mSensor==System::MONOCULAR)
-        thRefRatio = 0.9f;
+        thRefRatio = 0.7f; //0.9f
 
     // Condition 1a: More than "MaxFrames" have passed from last keyframe insertion
     const bool c1a = mCurrentFrame.mnId>=mnLastKeyFrameId+mMaxFrames;
@@ -1354,7 +1354,7 @@ bool Tracking::Relocalization()
 
     // We perform first an ORB matching with each candidate
     // If enough matches are found we setup a PnP solver
-    ORBmatcher matcher(0.75,true);
+    ORBmatcher matcher(0.65,true); // 0.75
 
     vector<PnPsolver*> vpPnPsolvers;
     vpPnPsolvers.resize(nKFs);
@@ -1447,17 +1447,18 @@ bool Tracking::Relocalization()
                         mCurrentFrame.mvpMapPoints[io]=static_cast<MapPoint*>(NULL);
 
                 // If few inliers, search by projection in a coarse window and optimize again
-                if(nGood<50)
+                if(nGood<40) // 50
+                std::cout << "tracking Relocalization"  << std::endl;
                 {
                     int nadditional =matcher2.SearchByProjection(mCurrentFrame,vpCandidateKFs[i],sFound,10,100);
 
-                    if(nadditional+nGood>=50)
+                    if(nadditional+nGood>=40)
                     {
                         nGood = Optimizer::PoseOptimization(&mCurrentFrame);
 
                         // If many inliers but still not enough, search by projection again in a narrower window
                         // the camera has been already optimized with many points
-                        if(nGood>30 && nGood<50)
+                        if(nGood>20 && nGood<40) //30, 50
                         {
                             sFound.clear();
                             for(int ip =0; ip<mCurrentFrame.N; ip++)
@@ -1466,7 +1467,7 @@ bool Tracking::Relocalization()
                             nadditional =matcher2.SearchByProjection(mCurrentFrame,vpCandidateKFs[i],sFound,3,64);
 
                             // Final optimization
-                            if(nGood+nadditional>=50)
+                            if(nGood+nadditional>=40) //50
                             {
                                 nGood = Optimizer::PoseOptimization(&mCurrentFrame);
 
@@ -1480,7 +1481,7 @@ bool Tracking::Relocalization()
 
 
                 // If the pose is supported by enough inliers stop ransacs and continue
-                if(nGood>=50)
+                if(nGood>=40) //50
                 {
                     bMatch = true;
                     break;
