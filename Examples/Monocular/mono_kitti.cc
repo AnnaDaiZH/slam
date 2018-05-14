@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 
     // Main loop
     cv::Mat im;
-    for(int ni=0; ni<nImages; ni++)
+    for(int ni=204; ni<nImages; ni++)//0
     {
         // Read image from file
         im = cv::imread(vstrImageFilenames[ni],CV_LOAD_IMAGE_UNCHANGED);
@@ -158,8 +158,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     {
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
-        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_m.png";
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
 
 }
