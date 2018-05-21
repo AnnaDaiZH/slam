@@ -155,8 +155,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         }
     }
 
-    //string strPrefixLeft = strPathToSequence + "/image_0/";
-    string strPrefixLeft = strPathToSequence + "/blurred/";
+    string strPrefixLeft = strPathToSequence + "/image_0/";
+    //string strPrefixLeft = strPathToSequence + "/blurred/";
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
@@ -166,8 +166,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     {
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
-        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
 
 }
