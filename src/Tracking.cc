@@ -1018,12 +1018,12 @@ bool Tracking::NeedNewKeyFrame()
     bool bNeedToInsertClose = (nTrackedClose<100) && (nNonTrackedClose>70);
 
     // Thresholds
-    float thRefRatio = 0.7f; // 0.75
+    float thRefRatio = 0.75f; // 0.75 changed
     if(nKFs<2)
         thRefRatio = 0.4f;
 
     if(mSensor==System::MONOCULAR)
-        thRefRatio = 0.7f; //0.9f
+        thRefRatio = 0.9f; //0.9f changed
 
     // Condition 1a: More than "MaxFrames" have passed from last keyframe insertion
     const bool c1a = mCurrentFrame.mnId>=mnLastKeyFrameId+mMaxFrames;
@@ -1282,7 +1282,7 @@ void Tracking::UpdateLocalKeyFrames()
     for(vector<KeyFrame*>::const_iterator itKF=mvpLocalKeyFrames.begin(), itEndKF=mvpLocalKeyFrames.end(); itKF!=itEndKF; itKF++)
     {
         // Limit the number of keyframes
-        if(mvpLocalKeyFrames.size()>80)
+        if(mvpLocalKeyFrames.size()>100) // changed
             break;
 
         KeyFrame* pKF = *itKF;
@@ -1354,7 +1354,7 @@ bool Tracking::Relocalization()
 
     // We perform first an ORB matching with each candidate
     // If enough matches are found we setup a PnP solver
-    ORBmatcher matcher(0.75,true); // 0.75
+    ORBmatcher matcher(0.5,true); // 0.75 changed
 
     vector<PnPsolver*> vpPnPsolvers;
     vpPnPsolvers.resize(nKFs);
@@ -1489,7 +1489,7 @@ bool Tracking::Relocalization()
             }
         }
     }
-    std::cout << " tracking: pSolver" << std::endl;
+    std::cout << " tracking: try to relocalize" << std::endl;
     for ( auto pSolver : vpPnPsolvers )
             delete pSolver;
 

@@ -24,6 +24,7 @@
 #include<fstream>
 #include<chrono>
 #include<iomanip>
+#include<string>
 
 #include<opencv2/core/core.hpp>
 
@@ -36,9 +37,9 @@ void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,
 
 int main(int argc, char **argv)
 {
-    if(argc != 5)
+    if(argc != 6)
     {
-        cerr << endl << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence path_to_trajectory" << endl;
+        cerr << endl << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence path_to_trajectory idx_starting_frame" << endl;
         return 1;
     }
 
@@ -62,7 +63,9 @@ int main(int argc, char **argv)
 
     // Main loop
     cv::Mat im;
-    for(int ni=204; ni<nImages; ni++)//0
+    int ni=std::stoi(argv[5]);
+    cout << "starting frame: " << ni<< endl;
+    for(ni; ni<nImages; ni++)//0
     {
         // Read image from file
         im = cv::imread(vstrImageFilenames[ni],CV_LOAD_IMAGE_UNCHANGED);
@@ -102,6 +105,11 @@ int main(int argc, char **argv)
 
         if(ttrack<T)
             usleep((T-ttrack)*1e6);
+        if (ni % 20 == 0) {
+          std::cout << "\rProgress: "
+              << int(double(ni) / double(nImages) * 100) << "%  "
+              << std::flush;
+        }
     }
     std::cout << "slam goes to shutsdown" << std::endl;
     // Stop all threads
@@ -147,8 +155,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         }
     }
 
-    //string strPrefixLeft = strPathToSequence + "/image_0/";
-    string strPrefixLeft = strPathToSequence + "/blurred/";
+    string strPrefixLeft = strPathToSequence + "/image_0/";
+    //string strPrefixLeft = strPathToSequence + "/blurred/";
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
@@ -159,7 +167,7 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
         vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
+        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
 
 }
