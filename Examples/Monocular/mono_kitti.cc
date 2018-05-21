@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 
         if(ttrack<T)
             usleep((T-ttrack)*1e6);
-        if (ni % 20 == 0) {
+        if (ni % 400 == 0) {
           std::cout << "\rProgress: "
               << int(double(ni) / double(nImages) * 100) << "%  "
               << std::flush;
@@ -155,8 +155,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         }
     }
 
-    string strPrefixLeft = strPathToSequence + "/image_0/";
-    //string strPrefixLeft = strPathToSequence + "/blurred/";
+    //string strPrefixLeft = strPathToSequence + "/image_0/";
+    string strPrefixLeft = strPathToSequence + "/blurred/";
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
@@ -166,8 +166,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     {
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
+        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
 
 }

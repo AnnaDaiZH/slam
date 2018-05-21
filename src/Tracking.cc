@@ -1354,7 +1354,7 @@ bool Tracking::Relocalization()
 
     // We perform first an ORB matching with each candidate
     // If enough matches are found we setup a PnP solver
-    ORBmatcher matcher(0.5,true); // 0.75 changed
+    ORBmatcher matcher(0.75,true); // 0.75 changed
 
     vector<PnPsolver*> vpPnPsolvers;
     vpPnPsolvers.resize(nKFs);
