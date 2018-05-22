@@ -1,0 +1,9 @@
+{
+    "align": true, 
+    "correct_scale": true, 
+    "delta": 1.0, 
+    "delta_unit": "m", 
+    "plot": true, 
+    "pose_relation": "trans_part", 
+    "verbose": true
+}

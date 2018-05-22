@@ -1,0 +1,7 @@
+{
+    "align": true, 
+    "correct_scale": true, 
+    "plot": true, 
+    "pose_relation": "trans_part", 
+    "verbose": true
+}

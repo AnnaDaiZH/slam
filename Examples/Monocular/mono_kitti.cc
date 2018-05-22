@@ -167,7 +167,7 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
         //vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png"; //for 03 _m else _b
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_m.png"; //for 03 _m else _b
     }
 
 }
