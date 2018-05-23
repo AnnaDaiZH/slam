@@ -20,6 +20,9 @@
 
 #include "FrameDrawer.h"
 #include "Tracking.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -84,7 +87,7 @@ cv::Mat FrameDrawer::DrawFrame()
                 cv::line(im,vIniKeys[i].pt,vCurrentKeys[vMatches[i]].pt,
                         cv::Scalar(0,255,0));
             }
-        }        
+        }
     }
     else if(state==Tracking::OK) //TRACKING
     {
@@ -128,7 +131,11 @@ cv::Mat FrameDrawer::DrawFrame()
 
 void FrameDrawer::DrawTextInfo(cv::Mat &im, int nState, cv::Mat &imText)
 {
+
     stringstream s;
+    ofstream outputFile;
+    std::string KP_filename = "KeyPoints.csv";
+    outputFile.open (KP_filename,std::ofstream::out |  std::ofstream::app); // Append mode
     if(nState==Tracking::NO_IMAGES_YET)
         s << " WAITING FOR IMAGES";
     else if(nState==Tracking::NOT_INITIALIZED)
@@ -141,7 +148,13 @@ void FrameDrawer::DrawTextInfo(cv::Mat &im, int nState, cv::Mat &imText)
             s << "LOCALIZATION | ";
         int nKFs = mpMap->KeyFramesInMap();
         int nMPs = mpMap->MapPointsInMap();
+
         s << "KFs: " << nKFs << ", MPs: " << nMPs << ", Matches: " << mnTracked;
+        // ofstream outputFile;
+        // std::string KP_filename = "KeyPoints.csv";
+        // outputFile.open (KP_filename,std::ofstream::out |  std::ofstream::app); // Append mode
+        outputFile << nKFs << "," << mnTracked <<"\n"; // Writing data to file
+        outputFile.close(); // Closing the file
         if(mnTrackedVO>0)
             s << ", + VO matches: " << mnTrackedVO;
     }
@@ -153,6 +166,7 @@ void FrameDrawer::DrawTextInfo(cv::Mat &im, int nState, cv::Mat &imText)
     {
         s << " LOADING ORB VOCABULARY. PLEASE WAIT...";
     }
+
 
     int baseline=0;
     cv::Size textSize = cv::getTextSize(s.str(),cv::FONT_HERSHEY_PLAIN,1,1,&baseline);

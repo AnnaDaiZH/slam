@@ -48,8 +48,9 @@ int main(int argc, char **argv)
     vector<double> vTimestamps;
     LoadImages(string(argv[3]), vstrImageFilenames, vTimestamps);
 
+
     int nImages = vstrImageFilenames.size();
-    //int nImages = 501;
+
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
     ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true);
 
@@ -110,6 +111,7 @@ int main(int argc, char **argv)
               << int(double(ni) / double(nImages) * 100) << "%  "
               << std::flush;
         }
+        
     }
     std::cout << "slam goes to shutsdown" << std::endl;
     // Stop all threads
@@ -137,7 +139,7 @@ int main(int argc, char **argv)
 
 void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilenames, vector<double> &vTimestamps)
 {
-    std::cout << " mono_kitti load images" << std::endl;
+
     ifstream fTimes;
     string strPathTimeFile = strPathToSequence + "/times.txt";
     fTimes.open(strPathTimeFile.c_str());
@@ -155,8 +157,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
         }
     }
 
-    //string strPrefixLeft = strPathToSequence + "/image_0/";
-    string strPrefixLeft = strPathToSequence + "/blurred/";
+    string strPrefixLeft = strPathToSequence + "/image_0/";
+    //string strPrefixLeft = strPathToSequence + "/blurred/";
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
@@ -166,8 +168,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     {
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
-        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
+        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+        //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
 
 }
