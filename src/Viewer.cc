@@ -41,8 +41,8 @@ Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer
     mImageHeight = fSettings["Camera.height"];
     if(mImageWidth<1 || mImageHeight<1)
     {
-        mImageWidth = 640;
-        mImageHeight = 480;
+        mImageWidth = 640;//640
+        mImageHeight = 480;//480
     }
 
     mViewpointX = fSettings["Viewer.ViewpointX"];

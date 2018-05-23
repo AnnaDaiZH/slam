@@ -1594,7 +1594,7 @@ int ORBmatcher::SearchByProjection(Frame &CurrentFrame, KeyFrame *pKF, const set
             }
         }
     }
-  
+
     return nmatches;
 }
 

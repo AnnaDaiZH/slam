@@ -69,9 +69,9 @@ using namespace std;
 namespace ORB_SLAM2
 {
 
-const int PATCH_SIZE = 31; //31
-const int HALF_PATCH_SIZE = 15; //15
-const int EDGE_THRESHOLD = 19; //19
+const int PATCH_SIZE = 31;
+const int HALF_PATCH_SIZE = 15;
+const int EDGE_THRESHOLD = 19;
 
 
 static float IC_Angle(const Mat& image, Point2f pt,  const vector<int> & u_max)
