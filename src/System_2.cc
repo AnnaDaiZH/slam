@@ -91,6 +91,7 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     mptLocalMapping = new thread(&ORB_SLAM2::LocalMapping::Run,mpLocalMapper);
 
     //Initialize the Loop Closing thread and launch
+    std::cout<< "system.cc disable loopclosing " << std::endl;
     mpLoopCloser = new LoopClosing(mpMap, mpKeyFrameDatabase, mpVocabulary, mSensor!=MONOCULAR);
     mptLoopClosing = new thread(&ORB_SLAM2::LoopClosing::Run, mpLoopCloser);
 
@@ -300,6 +301,7 @@ void System::Reset()
 
 void System::Shutdown()
 {
+    std::cout << "in shutsdown" << '\n';
     mpLocalMapper->RequestFinish();
     mpLoopCloser->RequestFinish();
     if(mpViewer)
@@ -316,6 +318,7 @@ void System::Shutdown()
     }
 
     if(mpViewer)
+        std::cout << "system cc. bind to context " << '\n';
         //pangolin::BindToContext("ORB-SLAM2: Map Viewer");
 }
 
@@ -389,7 +392,7 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename)
 
     // Transform all keyframes so that the first keyframe is at the origin.
     // After a loop closure the first keyframe might not be at the origin.
-    //cv::Mat Two = vpKFs[0]->GetPoseInverse();
+    cv::Mat Two = vpKFs[0]->GetPoseInverse(); //
 
     ofstream f;
     f.open(filename.c_str());
@@ -399,7 +402,7 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename)
     {
         KeyFrame* pKF = vpKFs[i];
 
-       // pKF->SetPose(pKF->GetPose()*Two);
+        pKF->SetPose(pKF->GetPose()*Two); //
 
         if(pKF->isBad())
             continue;
@@ -413,7 +416,7 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename)
     }
 
     f.close();
-    cout << endl << "trajectory saved!" << endl;
+    cout << endl << "trajectory sved!" << endl;
 }
 
 void System::SaveTrajectoryKITTI(const string &filename)
