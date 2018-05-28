@@ -1555,6 +1555,12 @@ FrameDrawer.h
 /home/anna/slam/src/FrameDrawer.h
 Tracking.h
 /home/anna/slam/src/Tracking.h
+iostream
+-
+fstream
+-
+string
+-
 opencv2/core/core.hpp
 -
 opencv2/highgui/highgui.hpp
