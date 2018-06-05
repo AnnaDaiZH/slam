@@ -1488,6 +1488,7 @@ bool Tracking::Relocalization()
             }
         }
     }
+    std::cout << " tracking: try to relocalize" << std::endl;
 
     if(!bMatch)
     {

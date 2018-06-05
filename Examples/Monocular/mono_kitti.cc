@@ -106,12 +106,12 @@ int main(int argc, char **argv)
 
         if(ttrack<T)
             usleep((T-ttrack)*1e6);
-        if (ni % 400 == 0) {
+        if (ni % 20 == 0) {
           std::cout << "\rProgress: "
               << int(double(ni) / double(nImages) * 100) << "%  "
               << std::flush;
         }
-        
+
     }
     std::cout << "slam goes to shutsdown" << std::endl;
     // Stop all threads
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
     std::cout << std::endl << "Finished. Press any key to exit." << std::endl << std::flush;
 
     // Save camera trajectory
-    SLAM.SaveTrajectoryKITTI(argv[4]);  //"KeyFrameTrajectory.txt"SaveKeyFrameTrajectoryTUM
+    SLAM.SaveTrajectoryKITTI(argv[4]);  //"KeyFrameTrajectory.txt"SaveKeyFrameTrajectoryTUM  SaveTrajectoryKITTI
     std::cout << "back to main" << '\n';
     cv::waitKey();
 
@@ -167,9 +167,8 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     for(int i=0; i<nTimes; i++) // nTimes
     {
         stringstream ss;
-        ss << setfill('0') << setw(6) << i;
+        ss << setfill('0') << setw(10) << i; //org 6 , raw 10
         vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
         //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }
-
 }
