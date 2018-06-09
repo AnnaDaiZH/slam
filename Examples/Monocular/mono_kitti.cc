@@ -37,9 +37,9 @@ void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,
 
 int main(int argc, char **argv)
 {
-    if(argc != 6)
+    if(argc != 7)
     {
-        cerr << endl << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence path_to_trajectory idx_starting_frame" << endl;
+        cerr << endl << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence path_to_trajectory idx_starting_frame idx_final_frame" << endl;
         return 1;
     }
 
@@ -65,8 +65,9 @@ int main(int argc, char **argv)
     // Main loop
     cv::Mat im;
     int ni=std::stoi(argv[5]);
-    cout << "starting frame: " << ni<< endl;
-    for(ni; ni<nImages; ni++)//0
+    int nend = std::stoi (argv[6]);
+    cout << "starting frame: " << ni << "final frame: " << nend << endl;
+    for(ni; ni<nend; ni++)//0 nImages
     {
         // Read image from file
         im = cv::imread(vstrImageFilenames[ni],CV_LOAD_IMAGE_UNCHANGED);
@@ -167,7 +168,7 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     for(int i=0; i<nTimes; i++) // nTimes
     {
         stringstream ss;
-        ss << setfill('0') << setw(10) << i; //org 6 , raw 10
+        ss << setfill('0') << setw(6) << i; //org 6 , raw 10
         vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
         //vstrImageFilenames[i] = strPrefixLeft + ss.str() + "_b.png";
     }

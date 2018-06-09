@@ -468,6 +468,7 @@ void System::SaveTrajectoryKITTI(const string &filename)
     }
     f.close();
     cout << endl << "trajectory saved!" << endl;
+    cv::waitKey();
 }
 
 int System::GetTrackingState()
